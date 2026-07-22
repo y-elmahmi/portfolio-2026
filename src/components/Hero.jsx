@@ -53,7 +53,7 @@ const Hero = () => {
         {/* Flexible Buttons: flex-1 كيعطيهم المرونة باش يعمرو الشاشة ف التليفون، و flex-none كيخليهم عاديين ف البيسي */}
         <div className="flex flex-wrap gap-4 w-full md:w-auto">
           <a 
-            href="https://linkedin.com/in/your-profile" 
+            href="https://www.linkedin.com/in/youssef-el-mahmi/" 
             target="_blank" 
             rel="noopener noreferrer"
             className="flex-1 md:flex-none flex items-center justify-center gap-3 px-8 py-3.5 bg-[#D9A05B] text-[#090E17] font-bold rounded-full hover:bg-white transition-all duration-300 min-w-[250px] text-sm uppercase tracking-wider shadow-[0_4px_15px_rgba(217,160,91,0.3)]"
@@ -62,7 +62,7 @@ const Hero = () => {
           </a>
           
           <a 
-            href="https://github.com/your-username" 
+            href="https://github.com/y-elmahmi" 
             target="_blank" 
             rel="noopener noreferrer"
             className="flex-1 md:flex-none flex items-center justify-center gap-3 px-8 py-3.5 bg-white text-[#090E17] font-bold rounded-full hover:bg-gray-200 transition-all duration-300 min-w-[250px] text-sm uppercase tracking-wider"
