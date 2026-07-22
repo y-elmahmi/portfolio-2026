@@ -1,11 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const Contact = () => {
+  const [status, setStatus] = useState('Transmit Message');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setStatus('Transmitting...');
+    const formData = new FormData(event.target);
+    
+    // حط الكود لي وصلك ف الإيميل هنا ف بلاصة YOUR_ACCESS_KEY_HERE
+    formData.append("access_key", "82737c46-6a30-4dda-8ac1-c974ec5fb808");
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      setStatus('Message Sent!');
+      event.target.reset(); // باش يخوي الفورميلار مورا ما يصيفط
+      setTimeout(() => setStatus('Transmit Message'), 3000);
+    } else {
+      setStatus('Error, Try Again');
+    }
+  };
+
   return (
     <section id="contact" className="relative py-24 px-6 md:px-12 bg-[#090E17] text-white overflow-hidden border-t border-white/5">
       
-      {/* لمسة الزليج التقني ف الخلفية */}
+      {/* Background Effect */}
       <div 
         className="absolute inset-0 opacity-[0.02] pointer-events-none" 
         style={{ 
@@ -17,7 +43,7 @@ const Contact = () => {
 
       <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row gap-16 items-center">
         
-        {/* الجزء ديال اليسار: معلومات التواصل */}
+        {/* Left Side: Contact Info */}
         <motion.div 
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -48,16 +74,15 @@ const Contact = () => {
           </div>
         </motion.div>
 
-        {/* الجزء ديال اليمين: الفورميلار */}
+        {/* Right Side: Contact Form */}
         <motion.div 
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="w-full md:w-7/12"
         >
-          <form className="bg-[#0F172A] p-8 md:p-10 border border-white/5 shadow-2xl relative group">
+          <form onSubmit={handleSubmit} className="bg-[#0F172A] p-8 md:p-10 border border-white/5 shadow-2xl relative group">
             
-            {/* ضو خفيف فاش كتحط السوريس على الفورميلار */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#D9A05B]/0 to-[#D9A05B]/0 group-hover:from-[#D9A05B]/5 transition-all duration-500 pointer-events-none"></div>
             
             <div className="relative z-10">
@@ -66,6 +91,8 @@ const Contact = () => {
                   <label className="text-xs text-[#D9A05B] uppercase tracking-widest mb-2 font-bold">First Name</label>
                   <input 
                     type="text" 
+                    name="First Name"
+                    required
                     className="bg-transparent border-b border-white/20 pb-2 text-white focus:outline-none focus:border-[#D9A05B] transition-colors"
                   />
                 </div>
@@ -73,6 +100,8 @@ const Contact = () => {
                   <label className="text-xs text-[#D9A05B] uppercase tracking-widest mb-2 font-bold">Last Name</label>
                   <input 
                     type="text" 
+                    name="Last Name"
+                    required
                     className="bg-transparent border-b border-white/20 pb-2 text-white focus:outline-none focus:border-[#D9A05B] transition-colors"
                   />
                 </div>
@@ -82,6 +111,8 @@ const Contact = () => {
                 <label className="text-xs text-[#D9A05B] uppercase tracking-widest mb-2 font-bold">Email</label>
                 <input 
                   type="email" 
+                  name="Email"
+                  required
                   className="bg-transparent border-b border-white/20 pb-2 text-white focus:outline-none focus:border-[#D9A05B] transition-colors"
                 />
               </div>
@@ -90,15 +121,18 @@ const Contact = () => {
                 <label className="text-xs text-[#D9A05B] uppercase tracking-widest mb-2 font-bold">Message</label>
                 <textarea 
                   rows="4" 
+                  name="Message"
+                  required
                   className="bg-transparent border-b border-white/20 pb-2 text-white focus:outline-none focus:border-[#D9A05B] transition-colors resize-none"
                 ></textarea>
               </div>
               
+              {/* Button */}
               <button 
-                type="button" 
+                type="submit" 
                 className="w-full py-4 bg-[#D9A05B] text-[#090E17] font-black tracking-[2px] uppercase hover:bg-white hover:shadow-[0_0_20px_rgba(217,160,91,0.4)] transition-all duration-300"
               >
-                Transmit Message
+                {status}
               </button>
             </div>
           </form>
