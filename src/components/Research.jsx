@@ -1,6 +1,13 @@
 import React from 'react';
+// 1. استيراد أدوات الترجمة
+import { useLanguage } from '../context/LanguageContext';
+import { translations } from '../utils/translations';
 
 const Research = () => {
+  // 2. استخراج اللغة الحالية ونصوص المشاريع
+  const { language } = useLanguage();
+  const t = translations[language].projects;
+
   return (
     <section id="projects" className="py-24 px-6 md:px-12 bg-[#FAFAFA] text-[#090E17] relative overflow-hidden">
       
@@ -14,70 +21,70 @@ const Research = () => {
         }}
       ></div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10" dir={language === 'AR' ? 'rtl' : 'ltr'}>
         
         {/* العنوان الفوقاني */}
         <p className="text-[#D9A05B] font-bold tracking-[3px] text-sm uppercase mb-3 text-center">
-          Applied Optimal Solutions
+          {t.badge}
         </p>
         <h2 className="text-4xl md:text-5xl font-light text-center mb-16" style={{ fontFamily: "'Playfair Display', serif" }}>
-          AI Projects & <span className="font-black text-[#D9A05B]">Innovations</span>
+          {t.title1} <span className="font-black text-[#D9A05B]">{t.title2}</span>
         </h2>
 
         {/* الكارطات ديال المشاريع (Research Cards Style) */}
         <div className="space-y-12">
           
           {/* مشروع 1: FinDawa */}
-          <div className="bg-white p-10 border border-black/5 border-l-4 border-l-[#D9A05B] shadow-sm hover:shadow-2xl transition-all duration-300">
+          <div className="bg-white p-10 border border-black/5 rtl:border-r-4 rtl:border-l-0 ltr:border-l-4 ltr:border-l-[#D9A05B] rtl:border-r-[#D9A05B] shadow-sm hover:shadow-2xl transition-all duration-300">
             <div className="flex flex-wrap gap-4 mb-6">
-              <span className="bg-[#090E17] text-white px-5 py-2 text-xs font-bold tracking-[1px] uppercase">Optimal Architecture</span>
-              <span className="border border-[#D9A05B] text-[#D9A05B] px-5 py-2 text-xs font-bold tracking-[1px] uppercase">Healthcare Logistics</span>
+              <span className="bg-[#090E17] text-white px-5 py-2 text-xs font-bold tracking-[1px] uppercase">{t.proj1.tag1}</span>
+              <span className="border border-[#D9A05B] text-[#D9A05B] px-5 py-2 text-xs font-bold tracking-[1px] uppercase">{t.proj1.tag2}</span>
             </div>
             
             <h3 className="text-2xl font-black text-[#090E17] mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
-              FinDawa: Geolocation & optimal stock management for healthcare logistics via MVC
+              {t.proj1.title}
             </h3>
             <p className="text-[#64748B] text-[0.95rem] font-medium mb-6">
-              El Mahmi, Youssef. (2025). Architecture optimization in dynamic inventory querying.
+              {t.proj1.meta}
             </p>
             <p className="text-[#475569] leading-relaxed text-[1.05rem]">
-              Introduces FinDawa, an applied ecosystem for optimized pharmacy geolocation and real-time inventory tracking. The system dynamically scales database queries for maximum accessibility by leveraging a strict Model-View-Controller (MVC) architecture, optimizing query latency and data consistency.
+              {t.proj1.description}
             </p>
           </div>
 
           {/* مشروع 2: OrdoSense IA */}
-          <div className="bg-white p-10 border border-black/5 border-l-4 border-l-[#D9A05B] shadow-sm hover:shadow-2xl transition-all duration-300">
+          <div className="bg-white p-10 border border-black/5 rtl:border-r-4 rtl:border-l-0 ltr:border-l-4 ltr:border-l-[#D9A05B] rtl:border-r-[#D9A05B] shadow-sm hover:shadow-2xl transition-all duration-300">
             <div className="flex flex-wrap gap-4 mb-6">
-              <span className="bg-[#090E17] text-white px-5 py-2 text-xs font-bold tracking-[1px] uppercase">Optimal Decision</span>
-              <span className="border border-[#D9A05B] text-[#D9A05B] px-5 py-2 text-xs font-bold tracking-[1px] uppercase">CV & NLP</span>
+              <span className="bg-[#090E17] text-white px-5 py-2 text-xs font-bold tracking-[1px] uppercase">{t.proj2.tag1}</span>
+              <span className="border border-[#D9A05B] text-[#D9A05B] px-5 py-2 text-xs font-bold tracking-[1px] uppercase">{t.proj2.tag2}</span>
             </div>
             
             <h3 className="text-2xl font-black text-[#090E17] mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
-              OrdoSense IA: Optimized semantic extraction and interaction analysis from medical prescriptions
+              {t.proj2.title}
             </h3>
             <p className="text-[#64748B] text-[0.95rem] font-medium mb-6">
-              El Mahmi, Youssef. (2026). Applied OpenCV, SpaCy, and decision optimal pharmacovigilance.
+              {t.proj2.meta}
             </p>
             <p className="text-[#475569] leading-relaxed text-[1.05rem]">
-              An advanced AI system optimized for reading medical prescriptions. It integrates OCR (OpenCV) for raw text extraction and semantic analysis (SpaCy, NLP) to dynamically optimize pharmacovigilance processes by accurately identifying and mitigating potential drug interactions before medical decisions are finalized.
+              {t.proj2.description}
             </p>
           </div>
 
           {/* مشروع 3: IntentTrials */}
-          <div className="bg-white p-10 border border-black/5 border-l-4 border-l-[#D9A05B] shadow-sm hover:shadow-2xl transition-all duration-300">
+          <div className="bg-white p-10 border border-black/5 rtl:border-r-4 rtl:border-l-0 ltr:border-l-4 ltr:border-l-[#D9A05B] rtl:border-r-[#D9A05B] shadow-sm hover:shadow-2xl transition-all duration-300">
             <div className="flex flex-wrap gap-4 mb-6">
-              <span className="bg-[#090E17] text-white px-5 py-2 text-xs font-bold tracking-[1px] uppercase">DevTools Optimization</span>
-              <span className="border border-[#D9A05B] text-[#D9A05B] px-5 py-2 text-xs font-bold tracking-[1px] uppercase">Multi-Agent AI</span>
+              <span className="bg-[#090E17] text-white px-5 py-2 text-xs font-bold tracking-[1px] uppercase">{t.proj3.tag1}</span>
+              <span className="border border-[#D9A05B] text-[#D9A05B] px-5 py-2 text-xs font-bold tracking-[1px] uppercase">{t.proj3.tag2}</span>
             </div>
             
             <h3 className="text-2xl font-black text-[#090E17] mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
-              IntentTrials: Optimal execution framework for deterministic control in AI coding agents
+              {t.proj3.title}
             </h3>
             <p className="text-[#64748B] text-[0.95rem] font-medium mb-6">
-              El Mahmi, Youssef. (2026). Developed at OpenAI Build Week.
+              {t.proj3.meta}
             </p>
             <p className="text-[#475569] leading-relaxed text-[1.05rem]">
-              A specialized developer tool designed to optimize the execution pipelines of automated AI coding agents. It provides a robust, optimized framework using CrewAI and ChromaDB to ensure deterministic control, resolving ambiguity and optimizing the path from agent decision to code generation.
+              {t.proj3.description}
             </p>
           </div>
 

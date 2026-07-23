@@ -1,8 +1,14 @@
 import React from 'react';
-// 1. هنا كنجيبو التصويرة ديالك من assets. تأكد من السمية واش .jpg ولا .png
 import profileImg from '../assets/profile.png';
+// 1. استيراد أدوات الترجمة
+import { useLanguage } from '../context/LanguageContext';
+import { translations } from '../utils/translations';
 
 const About = () => {
+  // 2. كنجبدو اللغة لي ختار اليوزر والنصوص ديال قسم about
+  const { language } = useLanguage();
+  const t = translations[language].about;
+
   return (
     <section id="about" className="relative py-24 px-6 md:px-12 bg-[#090E17] text-white overflow-hidden">
       
@@ -25,7 +31,6 @@ const About = () => {
           <div className="absolute -bottom-4 -right-4 w-16 h-16 border-b-2 border-r-2 border-[#D9A05B] z-20"></div>
           
           <div className="bg-[#0F172A] p-3 border border-white/5 shadow-2xl relative z-10 w-full max-w-[350px]">
-            {/* 2. هنا درنا المتغير profileImg ف بلاصة الرابط، وقادينا القياسات باش تجي مربعة وتغطي الإطار */}
             <div className="aspect-[4/5] overflow-hidden">
               <img 
                 src={profileImg} 
@@ -36,35 +41,36 @@ const About = () => {
           </div>
         </div>
 
-        {/* الجزء ديال اليمين: التيكست */}
+        {/* الجزء ديال اليمين: التيكست المترجم */}
         <div className="w-full md:w-8/12">
+          {/* هنا بدلنا التيكست الإنجليزي بـ t.badge */}
           <p className="text-[#D9A05B] font-bold tracking-[3px] text-sm uppercase mb-3">
-            Biography & Core Profile
+            {t.badge}
           </p>
           <h2 className="text-4xl md:text-5xl font-light mb-8" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Architecting <span className="font-black text-[#D9A05B]">Optimal Decisions.</span>
+            {t.title1} <span className="font-black text-[#D9A05B]">{t.title2}</span>
           </h2>
           
           <div className="space-y-6 text-gray-300 leading-relaxed text-[1.05rem] font-light">
             <p>
-              I am an AI Software Engineer specializing in <strong className="text-white font-medium">Systèmes Intelligents et Recherche Opérationnelle</strong>. My academic and professional journey is deeply rooted in designing <strong className="text-[#D9A05B] font-medium">Systèmes de Décision Optimaux</strong> and advanced Artificial Intelligence architectures that solve tangible, complex problems.
+              {t.p1_part1}<strong className="text-white font-medium">{t.p1_bold1}</strong>{t.p1_part2}<strong className="text-[#D9A05B] font-medium">{t.p1_bold2}</strong>{t.p1_part3}
             </p>
             <p>
-              What sets my profile apart is a proven capacity for extreme discipline and time management. I successfully architect production-ready software platforms while balancing demanding full-time professional responsibilities with an intensive academic engineering workload.
+              {t.p2}
             </p>
             <p>
-              My technical focus lies at the intersection of sophisticated algorithms and real-world utility. By leveraging Machine Learning, Computer Vision, and Multi-Agent AI frameworks, I have engineered robust systems like <strong className="text-white font-medium">FinDawa</strong> for automated healthcare logistics and <strong className="text-white font-medium">OrdoSense IA</strong> for semantic prescription analysis and pharmacovigilance.
+              {t.p3_part1}<strong className="text-white font-medium">{t.p3_bold1}</strong>{t.p3_part2}<strong className="text-white font-medium">{t.p3_bold2}</strong>{t.p3_part3}
             </p>
           </div>
 
           <div className="mt-10 pt-8 border-t border-white/10 flex flex-wrap gap-12">
             <div>
-              <h4 className="text-3xl font-black text-white" style={{ fontFamily: "'Playfair Display', serif" }}>AI & OR</h4>
-              <p className="text-xs text-[#D9A05B] tracking-widest mt-2 uppercase font-bold">Core Specialization</p>
+              <h4 className="text-3xl font-black text-white" style={{ fontFamily: "'Playfair Display', serif" }}>{t.stat1Title}</h4>
+              <p className="text-xs text-[#D9A05B] tracking-widest mt-2 uppercase font-bold">{t.stat1Desc}</p>
             </div>
             <div>
-              <h4 className="text-3xl font-black text-white" style={{ fontFamily: "'Playfair Display', serif" }}>100%</h4>
-              <p className="text-xs text-[#D9A05B] tracking-widest mt-2 uppercase font-bold">Delivery & Discipline</p>
+              <h4 className="text-3xl font-black text-white" style={{ fontFamily: "'Playfair Display', serif" }}>{t.stat2Title}</h4>
+              <p className="text-xs text-[#D9A05B] tracking-widest mt-2 uppercase font-bold">{t.stat2Desc}</p>
             </div>
           </div>
 

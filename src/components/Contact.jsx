@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
+import { translations } from '../utils/translations';
 
 const Contact = () => {
-  const [status, setStatus] = useState('Transmit Message');
+  const { language } = useLanguage();
+  const t = translations[language].contact;
+
+  const [status, setStatus] = useState(t.sendBtn);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setStatus('Transmitting...');
+    setStatus(language === 'AR' ? 'جاري الإرسال...' : language === 'FR' ? 'Envoi en cours...' : 'Transmitting...');
     const formData = new FormData(event.target);
     
-    // حط الكود لي وصلك ف الإيميل هنا ف بلاصة YOUR_ACCESS_KEY_HERE
     formData.append("access_key", "82737c46-6a30-4dda-8ac1-c974ec5fb808");
 
     const response = await fetch("https://api.web3forms.com/submit", {
@@ -20,18 +24,17 @@ const Contact = () => {
     const data = await response.json();
 
     if (data.success) {
-      setStatus('Message Sent!');
-      event.target.reset(); // باش يخوي الفورميلار مورا ما يصيفط
-      setTimeout(() => setStatus('Transmit Message'), 3000);
+      setStatus(language === 'AR' ? 'تم إرسال الرسالة!' : language === 'FR' ? 'Message Envoyé !' : 'Message Sent!');
+      event.target.reset();
+      setTimeout(() => setStatus(t.sendBtn), 3000);
     } else {
-      setStatus('Error, Try Again');
+      setStatus(language === 'AR' ? 'حدث خطأ، حاول مجدداً' : language === 'FR' ? 'Erreur, Réessayez' : 'Error, Try Again');
     }
   };
 
   return (
-    <section id="contact" className="relative py-24 px-6 md:px-12 bg-[#090E17] text-white overflow-hidden border-t border-white/5">
+    <section id="contact" className="relative py-24 px-6 md:px-12 bg-[#090E17] text-white overflow-hidden border-t border-white/5" dir={language === 'AR' ? 'rtl' : 'ltr'}>
       
-      {/* Background Effect */}
       <div 
         className="absolute inset-0 opacity-[0.02] pointer-events-none" 
         style={{ 
@@ -45,40 +48,42 @@ const Contact = () => {
         
         {/* Left Side: Contact Info */}
         <motion.div 
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: language === 'AR' ? 30 : -30 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
+          key={language}
           className="w-full md:w-5/12"
         >
           <span className="text-[#D9A05B] font-bold tracking-[3px] text-sm uppercase">
-            Initiate Connection
+            {t.badge}
           </span>
           <h2 className="text-4xl md:text-5xl font-light mt-3 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Let's Build <span className="font-black text-[#D9A05B]">Something.</span>
+            {t.title}
           </h2>
           <p className="text-gray-400 font-light mb-12 text-[1.05rem] leading-relaxed">
-            Open to discussing AI architectures, operational research optimization, or advanced engineering roles. Send a transmission.
+            {t.subtitle}
           </p>
           
           <div className="space-y-8">
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-widest mb-2 font-bold">Email Address</p>
+              <p className="text-xs text-gray-500 uppercase tracking-widest mb-2 font-bold">{t.emailLabel}</p>
               <a href="mailto:youssef.elmahmi@gmail.com" className="text-lg text-white hover:text-[#D9A05B] transition-colors font-medium">
                 youssef.elmahmi@gmail.com
               </a>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-widest mb-2 font-bold">Location</p>
-              <p className="text-lg text-white font-medium">Fès - Meknès, Morocco</p>
+              <p className="text-xs text-gray-500 uppercase tracking-widest mb-2 font-bold">{t.locationLabel}</p>
+              <p className="text-lg text-white font-medium">{t.locationValue}</p>
             </div>
           </div>
         </motion.div>
 
         {/* Right Side: Contact Form */}
         <motion.div 
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: language === 'AR' ? -30 : 30 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
+          key={`form-${language}`}
           className="w-full md:w-7/12"
         >
           <form onSubmit={handleSubmit} className="bg-[#0F172A] p-8 md:p-10 border border-white/5 shadow-2xl relative group">
@@ -88,7 +93,7 @@ const Contact = () => {
             <div className="relative z-10">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                 <div className="flex flex-col">
-                  <label className="text-xs text-[#D9A05B] uppercase tracking-widest mb-2 font-bold">First Name</label>
+                  <label className="text-xs text-[#D9A05B] uppercase tracking-widest mb-2 font-bold">{t.firstName}</label>
                   <input 
                     type="text" 
                     name="First Name"
@@ -97,7 +102,7 @@ const Contact = () => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label className="text-xs text-[#D9A05B] uppercase tracking-widest mb-2 font-bold">Last Name</label>
+                  <label className="text-xs text-[#D9A05B] uppercase tracking-widest mb-2 font-bold">{t.lastName}</label>
                   <input 
                     type="text" 
                     name="Last Name"
@@ -108,7 +113,7 @@ const Contact = () => {
               </div>
               
               <div className="flex flex-col mb-8">
-                <label className="text-xs text-[#D9A05B] uppercase tracking-widest mb-2 font-bold">Email</label>
+                <label className="text-xs text-[#D9A05B] uppercase tracking-widest mb-2 font-bold">{t.email}</label>
                 <input 
                   type="email" 
                   name="Email"
@@ -118,7 +123,7 @@ const Contact = () => {
               </div>
               
               <div className="flex flex-col mb-10">
-                <label className="text-xs text-[#D9A05B] uppercase tracking-widest mb-2 font-bold">Message</label>
+                <label className="text-xs text-[#D9A05B] uppercase tracking-widest mb-2 font-bold">{t.message}</label>
                 <textarea 
                   rows="4" 
                   name="Message"

@@ -1,23 +1,27 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
+import { translations } from '../utils/translations';
 
 const Skills = () => {
-  // دمجنا الموديلات ديال الإجازة والماستر بطريقة بروفيسيونيل
+  const { language } = useLanguage();
+  const t = translations[language].skills;
+
   const skillsData = [
     {
-      category: 'Intelligence Artificielle & GenAI',
+      category: t.cat1,
       skills: ['Machine Learning', 'Deep Learning', 'Computer Vision', 'LLMs & GenAI', 'NLP (SpaCy)', 'Réseaux de Neurones'],
     },
     {
-      category: 'Recherche Opérationnelle & Optimisation',
+      category: t.cat2,
       skills: ['Prog. Linéaire & Non-Linéaire', 'Optimisation Multiobjectif', 'Théorie de la Dualité', 'Algorithmes de Graphes', 'Modèles de la RO', 'Métaheuristiques'],
     },
     {
-      category: 'Mathématiques & Data Science',
+      category: t.cat3,
       skills: ['Modèles Statistiques', 'Optimisation Stochastique', 'Régression Logistique', 'Probabilités Appliquées', 'Science de la Décision', 'Data Analytics'],
     },
     {
-      category: 'Ingénierie, Cloud & Sécurité',
+      category: t.cat4,
       skills: ['Python & React', 'Architecture MVC', 'Cloud Computing', 'Sécurité des Données', 'Bases de Données', 'Git & CI/CD'],
     },
   ];
@@ -26,7 +30,7 @@ const Skills = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
     },
   };
 
@@ -55,10 +59,9 @@ const Skills = () => {
           y: -8,
           transition: { type: 'spring', stiffness: 300, damping: 20 },
         }}
-        // رديناها باللون الكحلي الغامق والبوردر خفيف
         className="group relative bg-[#0F172A] border border-white/5 rounded-2xl p-6 h-fit shadow-sm hover:shadow-2xl hover:shadow-[#D9A05B]/10 transition-all duration-500"
+        dir={language === 'AR' ? 'rtl' : 'ltr'}
       >
-        {/* ضو ذهبي خفيف فاش كتحط السوريس */}
         <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#D9A05B]/0 via-[#D9A05B]/0 to-[#D9A05B]/0 group-hover:from-[#D9A05B]/5 group-hover:to-transparent transition-all duration-500 pointer-events-none" />
 
         <div className="relative z-10">
@@ -73,7 +76,6 @@ const Skills = () => {
                 variants={skillPillVariants}
                 initial="initial"
                 whileHover="hover"
-                // الستيل ديال لي طاڭ (Tags) ولاو رمادي وكيضويو بالذهبي
                 className="px-3 py-1.5 text-[0.75rem] font-medium text-gray-300 bg-white/5 hover:bg-[#D9A05B]/10 border border-white/10 hover:border-[#D9A05B]/40 rounded-full transition-all duration-300 cursor-default select-none hover:text-[#D9A05B] uppercase tracking-wider"
               >
                 {skill}
@@ -88,7 +90,6 @@ const Skills = () => {
   return (
     <section id="skills" className="relative w-full bg-[#090E17] py-24 overflow-hidden border-t border-white/5">
       
-      {/* شبكة الزليج التقني ف الخلفية (شفاف جدا) */}
       <div 
         className="absolute inset-0 opacity-[0.015] pointer-events-none" 
         style={{ 
@@ -103,22 +104,23 @@ const Skills = () => {
         {/* Header ديال السيكسيون */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="mb-14 text-center md:text-left"
+          className={`mb-14 text-center ${language === 'AR' ? 'md:text-right' : 'md:text-left'}`}
+          dir={language === 'AR' ? 'rtl' : 'ltr'}
         >
           <div className="mb-4">
             <span className="inline-block text-[0.75rem] font-bold text-[#D9A05B] uppercase tracking-[3px]">
-              Scientific & Technical Stack
+              {t.badge}
             </span>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-light text-white mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Architecting <span className="font-black text-[#D9A05B]">Intelligent Systems.</span>
+            {t.title1} <span className="font-black text-[#D9A05B]">{t.title2}</span>
           </h2>
 
-          <p className="text-[1.05rem] text-gray-400 font-light max-w-2xl">
-            A comprehensive foundation in advanced mathematics, operations research, and modern artificial intelligence architectures.
+          <p className="text-[1.05rem] text-gray-400 font-light max-w-2xl mx-auto md:mx-0">
+            {t.description}
           </p>
         </motion.div>
 
@@ -126,8 +128,8 @@ const Skills = () => {
         <motion.div
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
+          animate="visible"
+          key={language}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
           {skillsData.map((item, idx) => (
@@ -140,7 +142,6 @@ const Skills = () => {
         </motion.div>
       </div>
 
-      {/* أضواء خلفية ذهبية خفيفة جداً للجمالية */}
       <motion.div
         animate={{ y: [0, 10, 0], opacity: [0.02, 0.04, 0.02] }}
         transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}

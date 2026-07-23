@@ -1,18 +1,20 @@
 import React from 'react';
+import { LanguageProvider } from './context/LanguageContext'; // استيراد Context ديال اللغة
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Expertise from './components/Expertise';
 import Skills from './components/Skills';
-import Research from './components/Research'; // هادا هو الملف ديال المشاريع لي صاوبنا
+import Research from './components/Research';
 import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import BigFooter from './components/BigFooter';
 
 function App() {
   return (
-    <>
+    // تغليف التطبيق كامل بـ LanguageProvider
+    <LanguageProvider>
       <Preloader />
       <Navbar />
       <Hero />
@@ -23,7 +25,7 @@ function App() {
       <Certifications />
       <Contact />
       <BigFooter />
-    </>
+    </LanguageProvider>
   );
 }
 
